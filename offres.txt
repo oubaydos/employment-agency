@@ -1,0 +1,30 @@
+of_00
+fa
+california
+junior software engineer
+100000
+04/04/2023
+EndOfOffer
+of_01
+falize
+demnate
+dev web
+20000
+01/02/2023
+oubayda bouifadene
+EndOfOffer
+of_10
+falize
+LA
+cybersecurity analyst
+99000
+25/11/2016
+EndOfOffer
+of_11
+falize
+kech
+gl
+200000
+04/04/2025
+obaydah boiufaden
+EndOfOffer
