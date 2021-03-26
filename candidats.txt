@@ -1,55 +1,60 @@
 0
 bouifadene
-obaydas
-dezj
-dev web + admin BD + gl
-1
-bouifadene
-odazk
-dezj
-gestion d'entreprises + technicien logistique
-2
-kerrou
-ezda
-edza
-OK
-3
-assali
-zaki
-edza
-OK
-4
-bouifadene
-kaka
-12
-123
-5
-gui
-damn
-algo
-c
-6
-dazq
-za
-az
-az
-7
-happt
-test
-ma,
-ea
-8
-test
-test
-adresse
-specialiré
-9
-bouifadene
 obaydah
-hey
-hh
+rue biir anzarane bouchane demnate
+data analyst + Chef de projet développement
+1
+rabah
+kamal
+marrakech
+Médecin généraliste
+2
+dirane
+omar
+16 rue temara Casablanca
+Ingénieur en électricité
+3
+braimi
+brahim
+Rabat
+technicien BD
+4
+eljamali
+mohamed
+rue sarae tetouane
+médecin ORL
+5
+elfahim
+kamal
+rue demnate Azilal
+téchnicien
+6
+mansouri
+sara
+KM 1, 5 ROUTE DE TAROUDANT, HAY AL AMAL AIT MELLOUL
+Ingénieur IA
+7
+dirar
+samir
+265 Chandler Roads Settat
+téchnicien développement
+8
+benJelloun
+Fouad
+112 guich oudaya temara Rabat
+Ingénieur securité
+9
+aadel
+abdelhalim
+rue 15 souk demnate
+data analyst
 10
-ab
-ba
-ds
-sd
+housni
+yahya
+58 rue elmorabit Berrachid
+infirmier
+11
+daki
+zakaria
+elmamounia marrakech
+téchnicien

@@ -1,30 +1,87 @@
-of_00
-fa
-california
+of_dv45
+google
+rabat 10000 
 junior software engineer
-100000
-04/04/2023
+10000
+04/04/2021
+bouifadene obaydah
 EndOfOffer
-of_01
-falize
-demnate
-dev web
-20000
-01/02/2023
-oubayda bouifadene
+of_bd14
+sqlEN
+RABAT 10000 
+chef de projet BigData
+9000
+01/01/2021
+bouifadene obaydah
+braimi brahim
 EndOfOffer
-of_10
+of_dv17
 falize
-LA
-cybersecurity analyst
-99000
-25/11/2016
+Marrakech 40000
+programmation en C
+11000
+07/02/2021
+bouifadene obaydah
 EndOfOffer
-of_11
-falize
-kech
-gl
-200000
-04/04/2025
-obaydah boiufaden
+of_ng99
+ingenierie sarl
+Marrakech 40000
+chef d'usine d'électricité
+25000
+15/03/2021
+dirane omar
+EndOfOffer
+of_md02
+medecinPourTous sarl
+Demnate 22300
+medecin
+25000
+15/03/2021
+rabah kamal
+eljamali mohamed
+EndOfOffer
+of_ng77
+microsoft
+Tetouan 93000
+maintenance et support informatique
+3500
+02/01/2020
+bouifadene obaydah
+mansouri sara
+EndOfOffer
+of_ng02
+IBM
+tangier 90060
+securité d'un logiciel
+5600
+03/11/2021
+bouifadene obaydah
+dirar samir
+EndOfOffer
+of_ng51
+IOS SARL
+agadir 80000
+developement d'une app IOS
+6200
+24/09/2021
+mansouri sara
+dirar samir
+EndOfOffer
+of_bd44
+Zeta SARL
+Eljadida 24030
+gestion d'une base de données
+8100
+03/01/2021
+braimi brahim
+aadel abdelhalim
+EndOfOffer
+of_bd08
+Beta SARL
+oujda 60020
+administration BigData
+11000
+16/12/2020
+bouifadene obaydah
+aadel abdelhalim
 EndOfOffer

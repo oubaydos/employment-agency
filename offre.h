@@ -1,5 +1,5 @@
-#include "linkedlists.h"
-const char* endof="EndOfOffer";
+#include "candidat.h"
+const char endof[10]="EndOfOffer";
 typedef struct SOffre{
     char code[20];
     char date[20];
@@ -7,39 +7,16 @@ typedef struct SOffre{
     char intitule[CMAX];
     char ville[CMAX];
     int salaire;
-    ListCandidats *liste_candidats;//par ordre de merite
+    char listeCandidat[2][CMAX];
 }Offre;
 bool isdate(char* date){
-    char* temp=(char*)malloc(CMAX*sizeof(char));
-    strcpy(temp,date);
-    int c=0,countslash = 0,j=0;
-    for (int i = 0 ; temp[i];i++)
-        if (temp[i]=='/')
-            countslash++;
-    if (countslash!=2)
-        return false;
-    char* day = strtok(temp,"/");
-    while(day){///////////// i could work on conditions more like if month = 2 & day =30 false
-        if(strisnum(temp)){
-            if(j==0 && atoi(day)<32 && atoi(day)>0)
-                c++;
-            else if (j==1 && atoi(day)<13 && atoi(day)>0)
-                c++;
-            else if (j==2 && atoi(day)>0)
-                c++;
-        }
-        else break;
-        day=strtok(NULL,"/");
-        if (c>3)
-            return false;
-        j++;
-
-    }
-
-    if (c==3)
-        return true;
+    if (strlen(date)!=10)
+      return false;
+    if (isdigit(date[0])&&isdigit(date[1])&&isdigit(date[3])&&isdigit(date[4])&&isdigit(date[6])&&isdigit(date[7])&&isdigit(date[8])&&isdigit(date[9]) && date[2]=='/'&&date[5]=='/')
+      return true;
     return false;
 }
+
 Offre* lireoffre(){// if wanna look for a candidat u should compare between other specifics than index !
     Offre *temp = Malloc(Offre);
     printf("svp entrer le nom de l'entreprise : ");
@@ -58,11 +35,9 @@ Offre* lireoffre(){// if wanna look for a candidat u should compare between othe
                 }
     printf("svp entrer le salaire propose : ");
     scanf("%d",&temp->salaire);
-    temp->liste_candidats = NULL; // dont know if that is true;
+
     return temp;
 }
-ListCandidats* fillcandidatstooffer(Offre* offre);
-    // i need to work that function
 
 void ajouteroffre(){
     Offre* temp = lireoffre();
@@ -74,9 +49,7 @@ void ajouteroffre(){
     fprintf(ptr,"%d\n",temp->salaire);
     fprintf(ptr,"%s\n",temp->date);
     //fillcandidatstooffer
-    while(temp->liste_candidats){
-        fprintf(ptr,"%s -- %s\n",temp->liste_candidats->value->ca_Nom,temp->liste_candidats->value->ca_Nom);
-    }
+
     fprintf(ptr,"EndOfOffer\n");
     fclose(ptr);
     return;
@@ -123,7 +96,7 @@ int nombredecandidat(char* code){
     fclose(ptr);
     return -1;
 }
-void modifyordeleteoffre(char* code,int what, int choice){
+void modifyordeleteoffre(char* code,int what, int choice,char *newM){
     int nombrecandidats = nombredecandidat(code);
 
     if (!isoffre(code))
@@ -149,7 +122,7 @@ void modifyordeleteoffre(char* code,int what, int choice){
         switch(what){
             case 1:
                 printf("donner le nouveau code : ");//kanakhdo nom jdid
-                gets(temp);
+                strcpy(temp,newM);
                 fprintf(newptr,"%s\n",temp);
                 for (int i = 0 ; i<(6+nombrecandidats) ; i++){//kanktbo les infos lakhrin
                     fscanf(rptr,"%[^\n]\n",temp);
@@ -158,7 +131,7 @@ void modifyordeleteoffre(char* code,int what, int choice){
                 break;
             case 2:
                 printf("donner le nouveau nom de l' entreprise : ");//kanakhdo nom jdid
-                gets(temp);
+                strcpy(temp,newM);
                 fprintf(newptr,"%s\n",temp);//kanktboh
                 fgets(junk,500,rptr);//kan9zoh f file lwl
                 for (int i = 0 ; i<(5+nombrecandidats) ; i++){//dakchi li b9a
@@ -170,7 +143,7 @@ void modifyordeleteoffre(char* code,int what, int choice){
                 fscanf(rptr,"%[^\n]\n",temp);//kanktbo entreprise
                 fprintf(newptr,"%s\n",temp);
                 printf("donner la nouvelle ville  : ");
-                gets(temp);
+                strcpy(temp,newM);
                 fprintf(newptr,"%s\n",temp);
                 fgets(junk,500,rptr);
                 for (int i = 0 ; i<(4+nombrecandidats) ; i++){//dakchi li b9a
@@ -184,7 +157,7 @@ void modifyordeleteoffre(char* code,int what, int choice){
                     fprintf(newptr,"%s\n",temp);
                 }
                 printf("donner le nouveau intitule : ");
-                gets(temp);
+                strcpy(temp,newM);
                 fprintf(newptr,"%s\n",temp);
                 fgets(junk,500,rptr);
                 for (int i = 0 ; i<(3+nombrecandidats) ; i++){
@@ -199,7 +172,7 @@ void modifyordeleteoffre(char* code,int what, int choice){
                 }
                 printf("donner le nouveau salaire : ");
                 int tempsal;
-                scanf("%d",&tempsal);
+                tempsal = atoi(newM);
                 fprintf(newptr,"%d\n",tempsal);
                 fgets(junk,500,rptr);
                 for (int i = 0 ; i<(2+nombrecandidats) ; i++){
@@ -213,11 +186,7 @@ void modifyordeleteoffre(char* code,int what, int choice){
                     fprintf(newptr,"%s\n",temp);
                 }
                 printf("donner la nouvelle date : ");
-                gets(temp);
-                while (!isdate(temp)){
-                    printf("ce n'est pas une date, entrer la date svp : ");
-                    gets(temp);
-                }
+                strcpy(temp,newM);
                 fprintf(newptr,"%s\n",temp);
                 fgets(junk,500,rptr);
                 for (int i = 0 ; i<(1+nombrecandidats) ; i++){
@@ -269,6 +238,7 @@ bool isintitule(char* intitule){
         if (isoffre(temp)){
             fscanf(rptr,"%[^\n]\n",temp);
             fscanf(rptr,"%[^\n]\n",temp);
+            strcpy(temp,"0");
             fscanf(rptr,"%[^\n]\n",temp);
             if (!strcmp(temp,intitule))
                 return true;
@@ -277,11 +247,16 @@ bool isintitule(char* intitule){
     fclose(rptr);
     return false;
 }
-void getdatafromcompany(char* entreprise){
+char ** getdatafromcompany(char* entreprise){
+    char ** templist=(char**)malloc(6*sizeof(char*));
+    for (int i = 0 ; i<6;i++){
+        templist[i]=(char*)malloc(CMAX * sizeof(char));
+    }
+
     if (!iscompany(entreprise))
     {
         printf("ce n'est pas une entreprise!\n");
-        return;
+        return NULL;
     }
     long cur;
     FILE *rptr = fopen("offres.txt","r");
@@ -296,30 +271,49 @@ void getdatafromcompany(char* entreprise){
         if(!strcmp(entreprise,temp)){
             fseek(rptr, cur, SEEK_SET);
             fscanf(rptr,"%[^\n]\n",temp);
-            printf("offre : %s\t",temp);
-            fgets(junk,CMAX,rptr);
-            for (int i = 0 ; i<4 ;i++){
+            strcpy(templist[0],temp);
+            fscanf(rptr,"%[^\n]\n",temp);
+            strcpy(templist[1],temp);
+            for (int i = 2 ; i<=5 ;i++){
+                strcpy(temp,"0");
                 fscanf(rptr,"%[^\n]\n",temp);
-                printf("%s%s\t",strings[i],temp);
+                strcpy(templist[i],temp);
             }
             printf("\n");
             deja = false;
+            //return templist;
         }
         else deja = false;
     }
     fclose(rptr);
-    return;
+    return templist;
 }
 
-void getdatafromintitule(char* intitule){
+
+int numberofoffres(){
+    FILE *rptr = fopen("offres.txt","r");
+    int c=0;
+    char temp[CMAX];
+    while (fscanf(rptr,"%[^\n]\n",temp)!=EOF){
+        if(isoffre(temp))
+            c++;
+    }
+    return c;
+}
+char** getdatafromintitule(char* intitule){
+    char ** templist=(char**)malloc(6*sizeof(char*));
+    for (int i = 0 ; i<6;i++){
+        templist[i]=(char*)malloc(CMAX * sizeof(char));
+    }
+
     if (!isintitule(intitule))
     {
         printf("ce n'est pas une intitule!\n");
-        return;
+        return NULL;
     }
     long cur;
     FILE *rptr = fopen("offres.txt","r");
-    char temp[CMAX],junk[CMAX];
+    char *temp=(char*)calloc(CMAX,sizeof(char)),junk[CMAX];
     bool deja=false;
     const char *strings[] = {"code : ","entreprise : ","ville : ","salaire : ","date : "};
     while (fscanf(rptr,"%[^\n]\n",temp)!=EOF){
@@ -333,12 +327,16 @@ void getdatafromintitule(char* intitule){
             fseek(rptr, cur, SEEK_SET);
             for (int i = 0 ; i<3 ;i++){
                 fscanf(rptr,"%[^\n]\n",temp);
-                printf("%s%s\t",strings[i],temp);
+                strcpy(templist[i],temp);
             }
+            strcpy(templist[3],intitule);
             fgets(junk,CMAX,rptr);
-            for (int i = 3 ; i<5 ;i++){
+            for (int i = 4 ; i<6 ;i++){
+                strcpy(temp,"0");
                 fscanf(rptr,"%[^\n]\n",temp);
-                printf("%s%s\t",strings[i],temp);
+                printf("%s",temp);
+                strcpy(templist[i],temp);
+
             }
             printf("\n");
             deja = false;
@@ -348,20 +346,9 @@ void getdatafromintitule(char* intitule){
         }
     }
     fclose(rptr);
-    return;
-}
-int numberofoffres(){
-    FILE *rptr = fopen("offres.txt","r");
-    int c=0;
-    char temp[CMAX];
-    while (fscanf(rptr,"%[^\n]\n",temp)!=EOF){
-        if(isoffre(temp))
-            c++;
-    }
-    return c;
+    return templist;
 }
 bool instr(char* s,char** list,int taille){
-    //printf("%s",list[0]);
     for (int i = 0 ; i<taille ; i++)
         if (!strcmp(list[i],s))
             return true;
@@ -375,6 +362,21 @@ char* getmaxspec(char** list,int taille){
     while (fscanf(rptr,"%[^\n]\n",temp)!=EOF){
         if (isintitule(temp)){
             if (strcmp(temp,max)>0 && !instr(temp,list,taille)){
+                strcpy(max,temp);
+            }
+        }
+    }
+    fclose(rptr);
+    return max;
+}
+char* getcom(char** list,int taille){
+    char* max = maxmalloc(char);
+    FILE *rptr = fopen("offres.txt","r");
+    char temp[CMAX];
+    strcpy(max,"\0");
+    while (fscanf(rptr,"%[^\n]\n",temp)!=EOF){
+        if (iscompany(temp)){
+            if (!instr(temp,list,taille)){
                 strcpy(max,temp);
             }
         }
@@ -400,26 +402,11 @@ void printofferssorted(){
     char** list=sortspec();
     for (int i = 0 ;i<n ; i++){
         printf("intitule : %s\t",list[i]);
-        getdatafromintitule(list[i]);
+        for (int j = 0 ; j<6; j++)
+            printf("%s",getdatafromintitule(list[i])[j]);
 
     }
     return ;
 }
 
 
-void getalloffers(char* nom,char* prenom){// all offers that could interest someone
-    char** domaines = getalldomaines(nom,prenom);
-    int n = numberofdomaines(nom,prenom);
-    char *temp = maxmalloc(char);
-    for (int i = 0 ; i<n ; i++){
-        strcpy(temp,domaines[i]);
-        delspace(temp);
-        if (isintitule(temp)){
-            printf("intitule : %s\t",temp);
-            getdatafromintitule(temp);
-        }
-
-    }
-    return;
-}
-void printallcandidats(int code);//linkedlists

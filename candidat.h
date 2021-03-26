@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stddef.h>
+#include <time.h>
 //#include "offre.h"
 #ifndef nl
 #define nl printf("\n") // new line
@@ -12,6 +13,16 @@
 #endif
 #define Malloc(x) (x*)malloc(sizeof(x))
 #define maxmalloc(x) (x*)malloc(CMAX*sizeof(x)) // allocate 255 elements of x
+int min(int a,int b){
+    if (a<b) return a;
+    return b;
+}
+// les domaines -> specialitées
+char dv[6][500]={"Chef de projet développement","téchnicien développement","programmeur","Ingénieur digitalisation","Ingénieur IA","Ingénieur securité"};
+char bd[5][500]={"Administrateur BD","technicien BD","data analyst","Ingénieur bigData","Ingénieur en science de données"};
+char md[5][500]={"Médecin généraliste","infirmier","Médecin","ophtalmologiste","médecin ORL"};
+char ng[3][500]={"Ingénieur en industrie","téchnicien","Ingénieur en électricité"};
+
 typedef enum {false,true} bool; // false = 0 , true = 1
 
 int indice ; // current number of candidates
@@ -68,7 +79,6 @@ void ajouter(){
     // file 7litih khas tsdo
     return;
 }
-
 bool in(int x,int* arr,int n){// wach l'element x kain f arr[n] ola la (b7al in dyal pyhton)
     for (int i = 0 ; i<n ; i++)
         if (arr[i]==x)
@@ -121,14 +131,23 @@ int indicemax(int arr[],int n){
 
 void sort(int* arr){
     //an3tiwha arr[indice] i3ni fih n element (n == numberofcandidates)
-    memset(arr,-1,indice); // had lfct kat3mr chi tableau bchi valeur (-1)
+
+    for (int i = 0 ; i<indice;i++)
+        arr[i]=-1;
+
     for (int i = 0 ; i<indice ; i++){
         arr[i]=indicemax(arr,indice);//kanjbdo les indices mrtbin
+        printf("%d\t",arr[i]);
     }
+
     for (int i = 0 ; i<indice/2 ; i++){//kanrtbohom alphabetiquement
         int temp = arr[i];
         arr[i]=arr[indice-1-i];
         arr[indice-1-i]=temp;
+    }
+    printf("\n");
+for (int i = 0 ; i<indice ; i++){
+        printf("%d\t",arr[i]);
     }
     return;
 }
@@ -183,9 +202,9 @@ int indexof(char* nom, char* prenom){//kan3tiwh smya o knya o kayrd lina indice 
     while (fscanf(ptr,"%[^\n]\n",temp)!=EOF){
         if (!strcmp(temp,nom)){
             fscanf(ptr,"%[^\n]\n",templ);
+            i++;
             if (!strcmp(templ,prenom)){
                 fclose(ptr);
-                i++;
                 return i/5;//ila l9a dik smya o lknya kayrd i/5 (ch7al mn candidat dwzna)
             }
 
@@ -203,13 +222,9 @@ bool strisnum(char* num){// kan3tiwh tableau dyal char o kaychuf wach ra9m ola l
     return true;
 }
 
-void modifyordelete(int what,char* nom, char* prenom,int choice){// create a new file and write on it till the wanted index write then the rest of the file
+void modifyordelete(int what,char* nom, char* prenom,int choice,char* news){// create a new file and write on it till the wanted index write then the rest of the file
     /* choice == 1 : modify ; choice == 0 : delete*/
 
-    if (!iscandidate(nom,prenom)){
-        printf("le candidat n'est pas encore enregistre\n");
-        return ;
-    }
     int wantedindex = indexof(nom,prenom);
     FILE* rptr = fopen("candidats.txt","r"),*newptr = fopen("temp.txt","w+");
     //1 == nom 2 == prenom 3 == adresse 4 == specialite
@@ -229,8 +244,7 @@ void modifyordelete(int what,char* nom, char* prenom,int choice){// create a new
         fprintf(newptr,"%s\n",num);//kanktbo indice dyal dak li ghanmodifyiw
         switch(what){
             case 1:
-                printf("donner le nouveau nom : ");//kanakhdo nom jdid
-                gets(temp);
+                strcpy(temp,news);
                 fprintf(newptr,"%s\n",temp);
                 fgets(junk,500,rptr);//kan9zo nom l9dim
                 for (int i = 0 ; i<3 ; i++){//kanktbo les infos lakhrin
@@ -242,7 +256,7 @@ void modifyordelete(int what,char* nom, char* prenom,int choice){// create a new
                 fscanf(rptr,"%[^\n]\n",temp);//kanktbo nom l9dim
                 fprintf(newptr,"%s\n",temp);
                 printf("donner le nouveau prenom : ");//kanakhdo nom jdid
-                gets(temp);
+                strcpy(temp,news);
                 fprintf(newptr,"%s\n",temp);//kanktboh
                 fgets(junk,500,rptr);//kan9zoh f file lwl
                 for (int i = 0 ; i<2 ; i++){//dakchi li b9a
@@ -255,8 +269,7 @@ void modifyordelete(int what,char* nom, char* prenom,int choice){// create a new
                 fprintf(newptr,"%s\n",temp);
                 fscanf(rptr,"%[^\n]\n",temp);
                 fprintf(newptr,"%s\n",temp);
-                printf("donner le nouveau adresse : ");
-                gets(temp);
+                strcpy(temp,news);
                 fprintf(newptr,"%s\n",temp);
                 fgets(junk,500,rptr);
                 fscanf(rptr,"%[^\n]\n",temp);
@@ -269,8 +282,7 @@ void modifyordelete(int what,char* nom, char* prenom,int choice){// create a new
                     fscanf(rptr,"%[^\n]\n",temp);
                     fprintf(newptr,"%s\n",temp);
                 }
-                printf("donner la nouvelle specialite : ");
-                gets(temp);
+                strcpy(temp,news);
                 fprintf(newptr,"%s\n",temp);
                 fgets(junk,500,rptr);
                 break;
@@ -313,6 +325,24 @@ char* getspecialite(char* nom,char* prenom){// gets how many domaines a candidat
             fscanf(ptr,"%[^\n]\n",templ);
             if (!strcmp(templ,prenom)){
                 fgets(templ,500,ptr);
+                fscanf(ptr,"%[^\n]\n",ans);
+                fclose(ptr);
+                return ans;
+            }
+        }
+    }
+    return NULL;//hadi yalah zdtha la dir chi mochkil
+}
+char* getadresse(char* nom,char* prenom){// gets how many domaines a candidate has
+    if (!iscandidate(nom,prenom))
+        return "not found";
+    char* ans = (char*)malloc(500*sizeof(char));
+    char temp[CMAX],templ[CMAX];
+    FILE* ptr = fopen("candidats.txt","r");
+    while (fscanf(ptr,"%[^\n]\n",temp)!=EOF){
+        if (!strcmp(temp,nom)){
+            fscanf(ptr,"%[^\n]\n",templ);
+            if (!strcmp(templ,prenom)){
                 fscanf(ptr,"%[^\n]\n",ans);
                 fclose(ptr);
                 return ans;
